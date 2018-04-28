@@ -1,0 +1,23 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <p>Hi there!</p>
+    <p>
+        {% for post in posts %}
+            <div>
+            <p>published: {{ post.name }}</p>
+            <h1><a href="">{{ post.rol_id.name }}</a></h1>
+
+        </div>
+        {% endfor %}
+    </p>
+</body>
+</html>

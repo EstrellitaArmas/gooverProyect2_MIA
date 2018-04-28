@@ -1,0 +1,96 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>INICIO</title>
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/plugins.css' %}">
+        <link rel="stylesheet" href="{% static 'css/responsive.css' %}" />
+
+        <script src="{% static 'js/vendor/modernizr-2.8.3-respond-1.4.2.min.js' %}"></script>
+        <script src="{% static 'js/vendor/jquery-1.11.2.min.js' %}"></script>
+        <script src="{% static 'js/vendor/bootstrap.min.js' %}"></script>
+
+        <script src="{% static 'js/plugins.js' %}"></script>
+        <script src="{% static 'js/main.js' %}"></script>
+
+    </head>
+    <body  data-spy="scroll" data-target="#main-navbar">
+        <div id="menubar" class="main-menu">
+            <nav class="navbar navbar-default navbar-fixed-top">
+                <div class="container">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <h1><a href=""><B>GOOVER</B></a></h1>
+                    </div>
+                </div><!-- /.container-fluid -->
+            </nav>
+        </div>
+        <header id="home" class="sections">
+            <div class="container">
+            </div>
+        </header>
+        <section id="our-history" class="sections">
+           <div class="container">
+              <div class="heading">
+                 <div class="title text-center arrow-left">
+                    <h4 class="">BIENVENIDO</h4>
+                 </div>
+              </div>
+              <div class="row">
+                 <div class="main-history">
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                       <p align="center">
+                           <img src="{% static 'images/team/3.png' %}" />
+                           <img src="{% static 'images/team/4.png' %}" />
+                       </p>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                       <div class="history-wrapper">
+                          <div class="history-content">
+                             <div class="title text-center arrow-right">
+                                <h4 class=""><a href="{% url 'login' %}"><b>INICIAR SESION</b></a></h4>
+                             </div>
+                             <div class="title text-center arrow-right">
+                                <h4 class=""><a href="{% url 'registro' %}"><b>REGISTRARSE</b></a></h4>
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                 </div>
+              </div>
+           </div>
+        </section>
+    <footer class="Footer">
+      <span class="Footer-logo icon-sammy"></span>
+
+      <div>
+           <p align="center"><h4 class="">Goover Company</h4> "Por una ciudad en movimiento"</p>
+      </div>
+
+      <ul class="Footer-nav">
+        <li> MISION
+            <span class="icon-rss">
+                Facilitar la movilizacion de las personas de un lugar a otro
+            </span>
+        </li>
+        <li> VISION
+            <span class="icon-rss">
+                Llegar a ser una de las companias de transporte mas importantes del pais
+            </span>
+        </li>
+      </ul>
+
+      <br>
+
+      <ul class="Footer-nav Footer-nav--secondary">
+        <p align="center">
+            <h4 class="">Estrellita Armas</h4> 20121219
+          </p>
+      </ul>
+    </footer>
+    </body>
+</html>
