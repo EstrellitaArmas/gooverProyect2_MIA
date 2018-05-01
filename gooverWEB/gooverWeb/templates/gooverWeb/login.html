@@ -18,7 +18,6 @@
         <script src="{% static 'js/main.js' %}"></script>
 </head>
 <body  data-spy="scroll" data-target="#main-navbar">
-        <div class='preloader'><div class='loaded'>&nbsp;</div></div>
         <div id="menubar" class="main-menu">
             <nav class="navbar navbar-default navbar-fixed-top">
                 <div class="container">
@@ -51,21 +50,21 @@
                     <div class="col-md-6 col-sm-6 col-xs-12">
                        <div class="history-wrapper">
                           <div class="history-content">
-                             <form action="login" method="post">
+                             <form class="post-form" method="post">{% csrf_token %}
+                                 <font color="red">{{ mensaje }}</font>
                                 <div class="input-group margin-bottom-sm">
                                    <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
-                                   <input class="form-control" type="text" id="nombre" name="user" placeholder="Email address">
+                                   <input class="form-control" type="text" id="email" name="email" placeholder="Email address">
                                 </div>
                                 <div class="input-group">
                                    <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
-                                   <input class="form-control" type="password" id="pass" name="pass" placeholder="Password">
+                                   <input class="form-control" type="password" id="password" name="password" placeholder="Password">
                                 </div><br>
                                 <a href="{% url 'registro' %}"><b>&nbsp;Registrarse</b></a>
                                 &nbsp;
                                 <button class="submit"> Iniciar Session &nbsp;<i class="fa fa-arrow-right fa-1x" aria-hidden="true"></i></button>
 
                                  <br><br>
-                                 <font color="red"></font>
                              </form>
                           </div>
                        </div>

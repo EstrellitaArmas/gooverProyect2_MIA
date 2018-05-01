@@ -83,9 +83,56 @@ class Client(models.Model):
     last_name = models.CharField(max_length=200)
     phone = models.IntegerField()
     email = models.EmailField()
-    photo = models.ImageField(blank=True, null=True)
+    photo = models.ImageField(upload_to='tmp', blank=True, null=True)
     password = models.CharField(max_length=32)
     virtual_cash = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return  '%s%s' % (self.email,self.password)
+
+    def setName(self, name):
+        self.name = name
+
+    def getName(self):
+        return self.name
+
+    def getLast_Name(self):
+        return  self.last_name
+
+    def setLast_Name(self,last_name):
+        self.last_name = last_name
+
+    def getPhone(self):
+        return  self.phone
+
+    def setPhone(self,phone):
+        self.phone = phone
+
+    def getEmail(self):
+        return self.email
+
+    def setEmail(self,email):
+        self.email = email
+
+    def getPhoto(self):
+        return self.photo
+
+    def setPhoto(self, photo):
+        self.photo = photo
+
+    def getPassword(self):
+        return  self.password
+
+    def setPassword(self,password):
+        self.password = password
+
+    def getVirtual_Cash(self):
+        return  self.virtual_cash
+
+    def setVirtual_Cash(self,virtual_cash):
+        self.virtual_cash = virtual_cash
+
+
 
 
 class Reservation(models.Model):
