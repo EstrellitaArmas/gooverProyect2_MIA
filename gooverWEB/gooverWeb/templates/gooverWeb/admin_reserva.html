@@ -1,0 +1,225 @@
+{% extends 'gooverWeb/admin_base.html' %}
+
+{% load staticfiles %}
+
+
+{% block content %}
+
+<div class="col-md-6 col-sm-4 col-xs-12">
+    <div class="history-wrapper">
+        <form class="post-form" method="post">{% csrf_token %}
+              <font color="red">{{ mensaje }}</font>
+            <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-users"></i></span>
+                  <select class="form-control" name="client_id" id="client_id">
+                      <option value="">Cliente</option>
+                      {% for item in clientes %}
+                        <option value='{{ item.id }}'>{{ item }}</option>
+                      {% endfor %}
+                  </select>
+            </div>
+            <div class="input-group">
+              <span class="input-group-addon"><i class="fa fa-calendar bigger-110"></i></span>
+              <input class="form-control date-picker" id="reservation_date" name="reservation_date" type="text" data-date-format="dd/mm/yy" placeholder="Fecha" />
+            </div>
+
+            <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-users"></i></span>
+                  <select class="form-control" name="conductor_id" id="conductor_id">
+                      <option value="">Conductor</option>
+                      {% for item in conductores %}
+                        <option value='{{ item.id }}'>{{ item }}</option>
+                      {% endfor %}
+                  </select>
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-credit-card bigger-110"></i></span>
+                <input class="form-control" type="text" id="price" name="price" placeholder="Precio"/>
+            </div>
+            <div class="input-group" id="kilometros">
+                 <span class="input-group-addon"><i class="fa fa-globe bigger-110"></i></span>
+                 <input class="form-control" type="hidden" id="latitude_ini" name="latitude_ini" readonly="true" />
+                 <input class="form-control" type="hidden" id="longitude_ini" name="longitude_ini" readonly="true"/>
+                 <input class="form-control" type="hidden" id="latitude_fin" name="latitude_fin" readonly="true" />
+                 <input class="form-control" type="hidden" id="longitude_fin" name="longitude_fin" readonly="true"/>
+            </div><br>
+
+            <button class="submit"><b>Guardar</b><i class="fa fa-arrow-right fa-1x" aria-hidden="true"></i></button>
+            <br><br>
+         </form>
+   </div>
+</div>
+
+<div class="col-md-6 col-sm-10 col-xs-12">
+    <div class="history-wrapper">
+        <span class="menu-text"> Busca en el mapa </span>
+        <br>
+        <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+        <div id="map"></div>
+   </div>
+</div>
+
+<script type="text/javascript">
+
+    function initAutocomplete() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 14.6284544, lng: -90.5084928},
+          zoom: 12,
+          mapTypeId: 'roadmap'
+        });
+
+        // Create the search box and link it to the UI element.
+        var input = document.getElementById('pac-input');
+        var searchBox = new google.maps.places.SearchBox(input);
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+        // Bias the SearchBox results towards current map's viewport.
+        map.addListener('bounds_changed', function() {
+          searchBox.setBounds(map.getBounds());
+        });
+
+        var markers = [];
+        // Listen for the event fired when the user selects a prediction and retrieve
+        // more details for that place.
+        searchBox.addListener('places_changed', function() {
+            var places = searchBox.getPlaces();
+
+            if (places.length == 0) {
+                return;
+            }
+
+            // Clear out the old markers.
+            markers.forEach(function(marker) {
+                marker.setMap(null);
+            });
+            markers = [];
+
+            // For each place, get the icon, name and location.
+            var bounds = new google.maps.LatLngBounds();
+            places.forEach(function(place) {
+                if (!place.geometry) {
+                  console.log("Returned place contains no geometry");
+                  return;
+                }
+                var icon = {
+                  url: place.icon,
+                  size: new google.maps.Size(71, 71),
+                  origin: new google.maps.Point(0, 0),
+                  anchor: new google.maps.Point(17, 34),
+                  scaledSize: new google.maps.Size(25, 25)
+                };
+
+                // Create a marker for each place.
+                markers.push(new google.maps.Marker({
+                  map: map,
+                  icon: icon,
+                  title: place.name,
+                  position: place.geometry.location
+                }));
+
+                if (place.geometry.viewport) {
+                  // Only geocodes have viewport.
+                  bounds.union(place.geometry.viewport);
+                } else {
+                  bounds.extend(place.geometry.location);
+                }
+            });
+            map.fitBounds(bounds);
+
+            var latitud = ((bounds.f.b) + (bounds.f.f))/2
+            var longitud = ((bounds.b.b + bounds.b.f)/2)
+            latitud = latitud.toFixed(7)
+            longitud = longitud.toFixed(7)
+            if($('#latitude_ini').val() == ''){
+                $('#latitude_ini').val(latitud);
+                $('#longitude_ini').val(longitud);
+
+            }else{
+                $('#latitude_fin').val(latitud);
+                $('#longitude_fin').val(longitud);
+                calculateAndDisplayRoute(map);
+            }
+
+        });
+    }
+
+    function calculateAndDisplayRoute(map) {
+
+            var directionsServiceTmp = new google.maps.DirectionsService;
+            var directionsDisplayTmp = new google.maps.DirectionsRenderer;
+
+            location_ini = $('#latitude_ini').val() + ',' + $('#longitude_ini').val()
+            location_fin = $('#latitude_fin').val() + ',' + $('#longitude_fin').val()
+
+            directionsServiceTmp.route({
+                origin: location_ini,
+                destination: location_fin,
+                optimizeWaypoints: true,
+                travelMode: 'DRIVING'
+            }, function(response, status) {
+                if (status === 'OK') {
+                    $('#kilometros').append('<strong>'+ response.routes[0].legs[0].distance.text + '</strong>')
+                    var precio = ((response.routes[0].legs[0].distance.value)/1000)*7.5
+                    $('#price').val( precio.toFixed(2))
+
+                    directionsDisplayTmp.setDirections(response);
+                } else {
+                    var center_gt = {lat: 14.643055555556, lng: -90.513333333333};
+                    map = new google.maps.Map(document.getElementById('map'), {
+                        zoom: 5,
+                        center: center_gt
+                    });;
+                }
+            });
+            directionsDisplayTmp.setMap(map);
+    }
+
+</script>
+
+
+<script type="text/javascript">
+			jQuery(function($) {
+
+				$('[data-rel=tooltip]').tooltip({container:'body'});
+				$('[data-rel=popover]').popover({container:'body'});
+
+				$.mask.definitions['~']='[+-]';
+				$('.input-mask-date').mask('99:99');
+
+
+				//datepicker plugin
+				//link
+				$('.date-picker').datepicker({
+					autoclose: true,
+					todayHighlight: true
+				})
+				//show datepicker when clicking on the icon
+				.next().on(ace.click_event, function(){
+					$(this).prev().focus();
+				});
+
+				$('#date-timepicker1').datetimepicker().next().on(ace.click_event, function(){
+					$(this).prev().focus();
+				});
+
+
+				$(document).one('ajaxloadstart.page', function(e) {
+					$('textarea[class*=autosize]').trigger('autosize.destroy');
+					$('.limiterBox,.autosizejs').remove();
+					$('.daterangepicker.dropdown-menu,.colorpicker.dropdown-menu,.bootstrap-datetimepicker-widget.dropdown-menu').remove();
+				});
+
+			});
+</script>
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAH_oghpy0PoXFsDXsoUS6OQE5XQprS-64&libraries=places&callback=initAutocomplete"
+         async defer></script>
+
+<script src="{% static 'assets/js/date-time/bootstrap-datepicker.js' %}"></script>
+<script src="{% static 'assets/js/date-time/bootstrap-timepicker.js' %}"></script>
+<script src="{% static 'assets/js/date-time/bootstrap-datetimepicker.js' %}"></script>
+<script src="{% static 'assets/js/date-time/moment.js' %}"></script>
+<script src="{% static 'assets/js/jquery.maskedinput.js' %}"></script>
+
+{% endblock %}

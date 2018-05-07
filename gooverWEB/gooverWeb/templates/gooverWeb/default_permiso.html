@@ -1,0 +1,114 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>INICIO</title>
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/plugins.css' %}">
+        <link rel="stylesheet" href="{% static 'css/responsive.css' %}" />
+
+        <script src="{% static 'js/vendor/modernizr-2.8.3-respond-1.4.2.min.js' %}"></script>
+        <script src="{% static 'js/vendor/jquery-1.11.2.min.js' %}"></script>
+        <script src="{% static 'js/vendor/bootstrap.min.js' %}"></script>
+
+        <script src="{% static 'js/plugins.js' %}"></script>
+        <script src="{% static 'js/main.js' %}"></script>
+
+    </head>
+    <body  data-spy="scroll" data-target="#main-navbar">
+        <div id="menubar" class="main-menu">
+            <nav class="navbar navbar-default navbar-fixed-top">
+                <div class="container">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <h1><a href=""><B>GOOVER</B></a></h1>
+                    </div>
+                </div><!-- /.container-fluid -->
+            </nav>
+        </div>
+        <header id="home" class="sections">
+            <div class="container">
+            </div>
+        </header>
+        <section id="our-history" class="sections">
+           <div class="container">
+              <div class="heading">
+                 <div class="title text-center arrow-left">
+                    <h4 class="">BIENVENIDO</h4>
+                 </div>
+              </div>
+              <div class="row">
+                 <div class="main-history">
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                       <p align="center">
+                           <img src="{% static 'images/team/3.png' %}" />
+                           <img src="{% static 'images/team/4.png' %}" />
+                       </p>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                       <div class="history-wrapper">
+                          <div class="history-content">
+                             <div class="title text-center arrow-right">
+                                <h4 class=""><a href="{% url 'login' %}"><b>INICIAR SESION</b></a></h4>
+                             </div>
+                             <div class="title text-center arrow-right">
+                                <h4 class=""><a href="{% url 'registro' %}"><b>REGISTRARSE</b></a></h4>
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                 </div>
+              </div>
+           </div>
+        </section>
+
+        <footer id="footer" class="footer">
+            <div class="container">
+
+                <div class="row">
+                    <div class="main-footer">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <div class="footer-item">
+                                <h2>GOOVER COMPANY</h2>
+                                <ul>
+                                    <li><a href="#"></a>
+                                        <span class="icon-rss">
+                                            "Por una ciudad en movimiento"
+                                        </span>
+                                    </li>
+                                    <li><a href="#">Mision</a>
+                                        <span class="icon-rss">
+                                            Facilitar la movilizacion de las personas de un lugar a otro
+                                        </span>
+                                    </li>
+                                    <li><a href="#">Vision</a>
+                                        <span class="icon-rss">
+                                            Llegar a ser una de las companias de transporte mas importantes del pais
+                                        </span>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="socio-copyright">
+                        <div class="social">
+                            <a target="_blank" href="#"><i class="fa fa-facebook"></i></a>
+                            <a target="_blank" href="#"><i class="fa fa-twitter"></i></a>
+                            <a target="_blank" href="#"><i class="fa fa-google-plus"></i></a>
+                            <a target="_blank" href="#"><i class="fa fa-linkedin"></i></a>
+                        </div>
+                        <p>Made by <i class="fa fa-star"></i>  Estrellita Armas 201212919</p>
+                    </div>
+
+                </div>
+            </div>
+
+        </footer>
+
+    </body>
+</html>

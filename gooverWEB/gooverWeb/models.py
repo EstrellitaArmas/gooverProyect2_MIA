@@ -4,6 +4,9 @@ from django.db import models
 class ModeloVehiculo(models.Model):
     nombre = models.CharField(max_length=200)
 
+    def __str__(self):
+        return self.nombre
+
     def setName(self, name):
         self.nombre = name
 
@@ -13,6 +16,9 @@ class ModeloVehiculo(models.Model):
 
 class MarcaVehiculo(models.Model):
     nombre = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.nombre
 
     def setName(self, name):
         self.nombre = name
@@ -24,6 +30,9 @@ class MarcaVehiculo(models.Model):
 class Rol(models.Model):
     name = models.CharField(max_length=200)
     description = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name
 
     def setName(self, name):
         self.name = name
@@ -41,11 +50,14 @@ class Rol(models.Model):
 class Employee(models.Model):
     name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
-    photo = models.ImageField(blank=True, null=True)
+    photo = models.ImageField(upload_to='tmp',blank=True, null=True)
     email = models.EmailField()
     phone = models.IntegerField()
     access_key = models.CharField(max_length=8)
     rol_id = models.ForeignKey(Rol)
+
+    def __str__(self):
+        return self.name
 
     def setName(self, name):
         self.name = name
@@ -53,20 +65,55 @@ class Employee(models.Model):
     def getName(self):
         return self.name
 
-    def __str__(self):
-        return self.name
+    def getLast_Name(self):
+        return  self.last_name
+
+    def setLast_Name(self,last_name):
+        self.last_name = last_name
+
+    def getPhone(self):
+        return  self.phone
+
+    def setPhone(self,phone):
+        self.phone = phone
+
+    def getEmail(self):
+        return self.email
+
+    def setEmail(self,email):
+        self.email = email
+
+    def getPhoto(self):
+        return self.photo
+
+    def setPhoto(self, photo):
+        self.photo = photo
+
+    def getAccesKey(self):
+        return  self.access_key
+
+    def setAccessKey(self,access_key):
+        self.access_key = access_key
+
+    def getRol(self):
+        return self.rol_id
+
+    def setRol(self, rol_id):
+        self.rol_id = rol_id
 
 
 class Driver(models.Model):
     name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
-    photo = models.ImageField(blank=True, null=True)
-    photo_license = models.ImageField(blank=True, null=True)
+    photo = models.ImageField(upload_to='tmp',blank=True, null=True)
+    photo_license = models.ImageField(upload_to='tmp',blank=True, null=True)
     email = models.EmailField()
     phone = models.IntegerField()
     access_key = models.CharField(max_length=8)
     rol_id = models.ForeignKey(Rol)
 
+    def __str__(self):
+        return '%s %s <%s>' % (self.name,self.last_name,self.email)
 
 class Vehiculo(models.Model):
     year = models.IntegerField(default=1900)
@@ -88,7 +135,7 @@ class Client(models.Model):
     virtual_cash = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
-        return  '%s%s' % (self.email,self.password)
+        return  '%s %s <%s>' % (self.name,self.last_name,self.email)
 
     def setName(self, name):
         self.name = name
@@ -133,8 +180,6 @@ class Client(models.Model):
         self.virtual_cash = virtual_cash
 
 
-
-
 class Reservation(models.Model):
     client_id = models.ForeignKey(Client)
     conductor_id = models.ForeignKey(Driver)
@@ -157,4 +202,4 @@ class Reservation(models.Model):
         ('COMPLETE', 'COMPLETADA'),
         ('CANCELED', 'CANCELADA'),
     )
-    year_in_school = models.CharField(max_length=10, choices=STATUS_CHOICES, default='TO_BEGIN')
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='TO_BEGIN')

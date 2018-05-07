@@ -1,0 +1,54 @@
+{% extends 'gooverWeb/admin_base.html' %}
+
+{% block content %}
+<div class="col-md-6 col-sm-6 col-xs-12">
+    <div class="history-wrapper">
+        <div class="history-content">
+            <span class="menu-text"> CREAR EMPLEADO </span>
+            <form class="post-form" method="post">{% csrf_token %}
+                  <font color="red">{{ mensaje }}</font>
+                  <div class="input-group margin-bottom-sm">
+                     <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
+                     <input class="form-control" type="text" id="email" name="email" placeholder="Email address"  required>
+                  </div>
+                  <div class="input-group">
+                     <span class="input-group-addon"><i class="ace-icon fa fa-user-o fa-fw"></i></span>
+                     <input class="form-control" type="text" id="name" name="name" placeholder="Name"  required>
+                  </div>
+                  <div class="input-group">
+                     <span class="input-group-addon"><i class="ace-icon fa fa-user-o fa-fw"></i></span>
+                     <input class="form-control" type="text" id="last_name" name="last_name" placeholder="Last Name"  required>
+                  </div>
+                  <div class="input-group">
+                     <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+                     <input class="form-control" type="password" id="access_key" name="access_key" placeholder="access_key" minlength="4" required>
+                  </div>
+                  <div class="input-group margin-bottom-sm">
+                     <span class="input-group-addon"><i class="fa fa-phone fa-fw"></i></span>
+                     <input class="form-control" type="text" id="phone" name="phone" placeholder="Phone" required>
+                  </div>
+                  <div class="input-group margin-bottom-sm">
+                      <span class="input-group-addon"><i class="fa fa-photo"></i></span>
+                      <input multiple="" type="file" name="multipleFile" id="photo" />
+                  </div>
+                  <div class="input-group margin-bottom-sm">
+                      <span class="input-group-addon"><i class="fa fa-users"></i></span>
+                      <select class="form-control" name="rol_id" id="rol_id">
+                          <option value=""></option>
+                          {% for rol in rols %}
+                            {% if rol.name != 'Cliente' and rol.name != 'Conductor' %}
+                                <option value='{{ rol.id }}'>{{ rol.name }}</option>
+                            {% endif %}
+                          {% endfor %}
+                      </select>
+                  </div><br>
+                  &nbsp;
+                  <button class="submit"><b>Guardar</b><i class="fa fa-arrow-right fa-1x" aria-hidden="true"></i></button>
+                  <br><br>
+             </form>
+
+        </div>
+   </div>
+</div>
+
+{% endblock %}

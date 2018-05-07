@@ -1,0 +1,56 @@
+{% extends 'gooverWeb/admin_base.html' %}
+
+{% block content %}
+<div class="col-md-6 col-sm-6 col-xs-12">
+    <div class="history-wrapper">
+        <div class="history-content">
+            <span class="menu-text"> CONFIGURACION DE CUENTA </span>
+            <br>
+            <form class="post-form" method="post">{% csrf_token %}
+                <font color="red">{{ mensaje }}</font>
+                  <div class="input-group margin-bottom-sm">
+                     <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
+                     <input class="form-control" type="text" id="email" name="email" placeholder="Email address" readonly="true" value="{{ request.session.email }}" required>
+                  </div>
+                  <div class="input-group">
+                     <span class="input-group-addon"><i class="ace-icon fa fa-user-o fa-fw"></i></span>
+                     <input class="form-control" type="text" id="name" name="name" placeholder="Name"  value="{{ request.session.user }}"required>
+                  </div>
+                  <div class="input-group">
+                     <span class="input-group-addon"><i class="ace-icon fa fa-user-o fa-fw"></i></span>
+                     <input class="form-control" type="text" id="last_name" name="last_name" placeholder="Last Name" value="{{ user.last_name }}" required>
+                  </div>
+                  <div class="input-group">
+                     <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+                      {% if request.session.rol == 'cliente' %}
+                            <input class="form-control" type="password" id="password" name="password" placeholder="Password" minlength="4" value="{{ user.password }}" required>
+                      {% else %}
+                            <input class="form-control" type="password" id="access_key" name="access_key" placeholder="access_key" minlength="4" value="{{ user.access_key }}" required>
+                      {% endif %}
+
+                  </div>
+                  <div class="input-group margin-bottom-sm">
+                     <span class="input-group-addon"><i class="fa fa-phone fa-fw"></i></span>
+                     <input class="form-control" type="text" id="phone" name="phone" placeholder="Phone" value="{{ user.phone }}" required>
+                  </div>
+                  <div class="input-group margin-bottom-sm">
+                      <span class="input-group-addon"><i class="fa fa-photo"></i></span>
+                      <input multiple="" type="file" name="multipleFile" id="photo" value="{{ user.photo }}" />
+                  </div>
+                    {% if request.session.rol != 'cliente' %}
+                      <div class="input-group margin-bottom-sm">
+                          <span class="input-group-addon"><i class="fa fa-users"></i></span>
+                          <select class="form-control" name="rol_id" id="rol_id" readonly="true">
+                              <option value="{{ user.rol_id.id }}">{{ user.rol_id.name }}</option>
+                          </select>
+                      </div>
+                    {% endif %}<br>              &nbsp;
+                  <button class="submit"><b>Guardar</b><i class="fa fa-arrow-right fa-1x" aria-hidden="true"></i></button>
+                  <br><br>
+             </form>
+
+        </div>
+   </div>
+</div>
+
+{% endblock %}
