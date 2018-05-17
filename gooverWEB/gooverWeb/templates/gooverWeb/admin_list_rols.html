@@ -29,11 +29,11 @@
 							<td>{{ rol.description }}</td>
 							<td>
 								<div class="hidden-sm hidden-xs action-buttons">
-									<a class="green" href="#"> {{ rol.id }}
+									<a class="green" href="{% url 'admin_edit_rol' id=rol.id %}">
 										<i class="ace-icon fa fa-pencil bigger-130"></i>
 									</a>
 
-									<a class="red" href="#">
+									<a class="red" href="{% url 'admin_delete_rol' id=rol.id %}">
 										<i class="ace-icon fa fa-trash-o bigger-130"></i>
 									</a>
 								</div>

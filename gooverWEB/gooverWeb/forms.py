@@ -60,10 +60,33 @@ class ConductorForm(forms.ModelForm):
 class ReservaForm(forms.ModelForm):
     class Meta:
         model = Reservation
-        fields = ('reservation_date',
+        fields = ('reservation_hour', 'reservation_date',
                   'longitude_ini','latitude_ini',
                   'longitude_fin', 'latitude_fin',
-                  'price',
+                  'price', 'payment_method',
                   'client_id','conductor_id')
         choiceModelo = forms.ModelMultipleChoiceField(queryset=Client.objects.all())
+        choiceConductor = forms.ModelMultipleChoiceField(queryset=Driver.objects.all())
+
+class ReservaEditForm(forms.ModelForm):
+    class Meta:
+        model = Reservation
+        fields = ('reservation_hour', 'reservation_date',
+                  'longitude_ini','latitude_ini',
+                  'longitude_fin', 'latitude_fin',
+                  'price', 'payment_method',
+                  'client_id','conductor_id','status')
+        choiceModelo = forms.ModelMultipleChoiceField(queryset=Client.objects.all())
+        choiceConductor = forms.ModelMultipleChoiceField(queryset=Driver.objects.all())
+
+class ReservaConsultaForm(forms.ModelForm):
+    class Meta:
+        model = Reservation
+        fields = ('reservation_date',)
+
+
+class ReservaConsultaHistoriaForm(forms.ModelForm):
+    class Meta:
+        model = Reservation
+        fields = ('conductor_id',)
         choiceConductor = forms.ModelMultipleChoiceField(queryset=Driver.objects.all())

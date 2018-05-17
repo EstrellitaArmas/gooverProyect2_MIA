@@ -1,0 +1,21 @@
+{% extends 'gooverWeb/admin_base.html' %}
+
+{% block content %}
+<div class="col-md-6 col-sm-6 col-xs-12">
+    <div class="history-wrapper">
+        <div class="history-content">
+            <span class="menu-text"> CREAR ROL </span>
+            <form class="post-form" method="post">{% csrf_token %}
+                  <font color="red">{{ mensaje }}</font>
+                  {{ form.as_p }}
+                    <br>
+                  &nbsp;
+                  <button class="submit"><b>Guardar</b><i class="fa fa-arrow-right fa-1x" aria-hidden="true"></i></button>
+                  <br><br>
+             </form>
+
+        </div>
+   </div>
+</div>
+
+{% endblock %}

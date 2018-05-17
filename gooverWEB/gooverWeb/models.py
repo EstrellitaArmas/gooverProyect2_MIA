@@ -183,7 +183,7 @@ class Client(models.Model):
 class Reservation(models.Model):
     client_id = models.ForeignKey(Client)
     conductor_id = models.ForeignKey(Driver)
-    reservation_hour = models.DateTimeField()
+    reservation_hour = models.TimeField()
     reservation_date = models.DateField()
     longitude_ini = models.DecimalField(max_digits=12, decimal_places=10)
     latitude_ini = models.DecimalField(max_digits=12, decimal_places=10)
@@ -192,8 +192,8 @@ class Reservation(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     PAYMENT_CHOICES = (
         ('CASH', 'EFECTIVO'),
-        ('CREDIT_CARD', 'TARJETA_CREDITO'),
-        ('VIRTUAL_CASH', 'MONEDA_VIRTUAL')
+        ('CARD', 'TARJETA_CREDITO'),
+        ('VIRTUAL', 'MONEDA_VIRTUAL')
     )
     payment_method = models.CharField(max_length=10, choices=PAYMENT_CHOICES, default='CASH')
     STATUS_CHOICES = (

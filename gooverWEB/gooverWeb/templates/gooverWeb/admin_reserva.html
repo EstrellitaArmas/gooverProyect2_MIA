@@ -9,20 +9,26 @@
     <div class="history-wrapper">
         <form class="post-form" method="post">{% csrf_token %}
               <font color="red">{{ mensaje }}</font>
+            <!-- clientes -->
             <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-users"></i></span>
                   <select class="form-control" name="client_id" id="client_id">
                       <option value="">Cliente</option>
-                      {% for item in clientes %}
-                        <option value='{{ item.id }}'>{{ item }}</option>
-                      {% endfor %}
+                          {% for item in clientes %}
+                            <option value='{{ item.id }}'>{{ item }}</option>
+                          {% endfor %}
                   </select>
             </div>
+            <!-- tiempo -->
             <div class="input-group">
               <span class="input-group-addon"><i class="fa fa-calendar bigger-110"></i></span>
-              <input class="form-control date-picker" id="reservation_date" name="reservation_date" type="text" data-date-format="dd/mm/yy" placeholder="Fecha" />
+              <input class="form-control date-picker" id="reservation_date" name="reservation_date" type="text" data-date-format="yyyy-mm-dd" placeholder="Fecha" />
             </div>
-
+           <div class="input-group">
+              <span class="input-group-addon"><i class="fa fa-clock-o bigger-110"></i></span>
+              <input class="form-control input-mask-date" type="text" id="reservation_hour" name="reservation_hour" placeholder="Hora" />
+           </div>
+            <!-- conductores -->
             <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-users"></i></span>
                   <select class="form-control" name="conductor_id" id="conductor_id">
@@ -32,17 +38,31 @@
                       {% endfor %}
                   </select>
             </div>
+            <!-- precio-->
             <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-credit-card bigger-110"></i></span>
                 <input class="form-control" type="text" id="price" name="price" placeholder="Precio"/>
             </div>
+            <!-- kilometros -->
             <div class="input-group" id="kilometros">
                  <span class="input-group-addon"><i class="fa fa-globe bigger-110"></i></span>
                  <input class="form-control" type="hidden" id="latitude_ini" name="latitude_ini" readonly="true" />
                  <input class="form-control" type="hidden" id="longitude_ini" name="longitude_ini" readonly="true"/>
                  <input class="form-control" type="hidden" id="latitude_fin" name="latitude_fin" readonly="true" />
                  <input class="form-control" type="hidden" id="longitude_fin" name="longitude_fin" readonly="true"/>
-            </div><br>
+            </div>
+            <!-- metodo de pago -->
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-credit-card bigger-110"></i></span>
+                <select class="form-control" id="payment_method" name="payment_method">
+                    <option value="CASH">EFECTIVO</option>
+                    <option value="CARD">TARJETA</option>
+                    <option value="VIRTUAL">MONEDA_VIRTUAL</option>
+                </select>
+            </div>
+
+
+            <br>
 
             <button class="submit"><b>Guardar</b><i class="fa fa-arrow-right fa-1x" aria-hidden="true"></i></button>
             <br><br>
@@ -184,8 +204,8 @@
 				$('[data-rel=popover]').popover({container:'body'});
 
 				$.mask.definitions['~']='[+-]';
-				$('.input-mask-date').mask('99:99');
-
+				$('.input-mask-date').mask('99:99:00.000000');
+                                          //20: 01: 24
 
 				//datepicker plugin
 				//link
@@ -196,17 +216,12 @@
 				//show datepicker when clicking on the icon
 				.next().on(ace.click_event, function(){
 					$(this).prev().focus();
-				});
 
-				$('#date-timepicker1').datetimepicker().next().on(ace.click_event, function(){
-					$(this).prev().focus();
 				});
-
 
 				$(document).one('ajaxloadstart.page', function(e) {
 					$('textarea[class*=autosize]').trigger('autosize.destroy');
 					$('.limiterBox,.autosizejs').remove();
-					$('.daterangepicker.dropdown-menu,.colorpicker.dropdown-menu,.bootstrap-datetimepicker-widget.dropdown-menu').remove();
 				});
 
 			});
